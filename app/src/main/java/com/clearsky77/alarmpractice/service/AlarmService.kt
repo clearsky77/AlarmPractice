@@ -3,7 +3,9 @@ package com.clearsky77.alarmpractice.service
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
+import com.clearsky77.alarmpractice.receiver.AlarmReceiver
 
 class AlarmService(private val context: Context) {
     private val alarmManager: AlarmManager? =
@@ -35,5 +37,12 @@ class AlarmService(private val context: Context) {
             }
         }
     }
+
+    private fun getIntent() : Intent = Intent(context, AlarmReceiver::class.java)
+
+//    private fun getPedingIntent() =
+
+
+
 
 }
