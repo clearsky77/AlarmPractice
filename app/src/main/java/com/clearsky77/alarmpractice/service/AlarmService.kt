@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.clearsky77.alarmpractice.receiver.AlarmReceiver
+import com.clearsky77.alarmpractice.util.RandomIntUtil
 
 class AlarmService(private val context: Context) {
     private val alarmManager: AlarmManager? =
@@ -40,7 +41,13 @@ class AlarmService(private val context: Context) {
 
     private fun getIntent() : Intent = Intent(context, AlarmReceiver::class.java)
 
-//    private fun getPedingIntent() =
+    private fun getPedingIntent(intent: Intent) : PendingIntent! =
+        PendingIntent.getBroadcast(
+            context,
+            RandomIntUtil().getRandomInt(),
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
 
 
