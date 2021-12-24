@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.clearsky77.alarmpractice.receiver.AlarmReceiver
+import com.clearsky77.alarmpractice.util.Constants
 import com.clearsky77.alarmpractice.util.RandomIntUtil
 
 class AlarmService(private val context: Context) {
@@ -13,12 +14,28 @@ class AlarmService(private val context: Context) {
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
 
     fun setExactAlarm(timeInMillis: Long){
-
+        setAlarm(
+            timeInMillis,
+            getPedingIntent(
+                getIntent().apply {
+                    action = Constants.ACTION_SET_EXACT_ALARM
+                    putExtra(Constants.EXTRA_EXACT_ALARM_TIME, timeInMillis)
+                }
+            )
+        )
     }
 
     // 매주(Every week)
-    fun setRepetitveAlarm(timeInMillis: Long){
-
+    fun setRepetitiveAlarm(timeInMillis: Long){
+        setAlarm(
+            timeInMillis,
+            getPedingIntent(
+                getIntent().apply {
+                    action = Constants.ACTION_SET_REPETIITIVE_ALARM
+                    putExtra(Constants.EXTRA_EXACT_ALARM_TIME, timeInMillis)
+                }
+            )
+        )
     }
 
     private fun setAlarm(timeInMillis: Long, pendingIntent: PendingIntent){
@@ -41,7 +58,7 @@ class AlarmService(private val context: Context) {
 
     private fun getIntent() : Intent = Intent(context, AlarmReceiver::class.java)
 
-    private fun getPedingIntent(intent: Intent) : PendingIntent! =
+    private fun getPedingIntent(intent: Intent) : PendingIntent =
         PendingIntent.getBroadcast(
             context,
             RandomIntUtil().getRandomInt(),
