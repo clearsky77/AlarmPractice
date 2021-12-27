@@ -18,7 +18,7 @@ class AlarmService(private val context: Context) {
             timeInMillis,
             getPedingIntent(
                 getIntent().apply {
-                    action = Constants.ACTION_SET_EXACT_ALARM
+                    action = Constants.ACTION_SET_EXACT
                     putExtra(Constants.EXTRA_EXACT_ALARM_TIME, timeInMillis)
                 }
             )
@@ -31,7 +31,7 @@ class AlarmService(private val context: Context) {
             timeInMillis,
             getPedingIntent(
                 getIntent().apply {
-                    action = Constants.ACTION_SET_REPETIITIVE_ALARM
+                    action = Constants.ACTION_SET_REPETITIVE_EXACT
                     putExtra(Constants.EXTRA_EXACT_ALARM_TIME, timeInMillis)
                 }
             )
