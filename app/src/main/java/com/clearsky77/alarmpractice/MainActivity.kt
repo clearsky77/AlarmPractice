@@ -18,17 +18,21 @@ class MainActivity : AppCompatActivity() {
         alarmService = AlarmService(this)
 
         btnExactAlarm.setOnClickListener {
-            setAlarm()
+            setAlarm { timeInMillis -> alarmService.setExactAlarm(timeInMillis)}
+        }
+
+        btnRepetitiveAlarm.setOnClickListener {
+
         }
 
     }
 
-    private fun setAlarm() {
+    private fun setAlarm(callback: (Long) -> Unit) {
         Calendar.getInstance().apply {
             DatePickerDialog(
                 this@MainActivity,
                 0,
-                DatePickerDialog.OnDateSetListener{_, year, month, day ->
+                {_, year, month, day ->
                     this.set(Calendar.YEAR, year)
                     this.set(Calendar.MONTH, month)
                     this.set(Calendar.DAY_OF_MONTH, day)
@@ -36,9 +40,10 @@ class MainActivity : AppCompatActivity() {
                     TimePickerDialog(
                         this@MainActivity,
                         0,
-                        TimePickerDialog.OnTimeSetListener { _, hour, min ->
+                        { _, hour, min ->
                             this.set(Calendar.HOUR_OF_DAY, hour)
                             this.set(Calendar.MINUTE, min)
+                            callback(this.timeInMillis)
                         },
                         this.get(Calendar.HOUR_OF_DAY),
                         this.get(Calendar.MINUTE),
